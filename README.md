@@ -4,7 +4,7 @@ These are various projects for the Zynq-7000 on an Antminer S9 board.
 
 The projects here are:
 
-1. xyz - xxxxxx
+1. mio_blink - blink the red/green LED via MIO and GPIO
 
 Also see my other Zynq related project respositories:
 
