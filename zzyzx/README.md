@@ -2,6 +2,7 @@ zzyzx - send endless messages to the console
 
 The Antminer S9 uses uart1 (not uart0) for the serial console.
 (somewhat to my surprise, so does the EBAZ-4205)
+The EBAZ schematic has the uart signals completely screwed up.
 
 This is a modification of the "fish" demo for the ebaz.
 
