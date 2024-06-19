@@ -7,7 +7,10 @@
 
 CROSS = arm-none-eabi-
 
-CC = $(CROSS)gcc
+LD = $(CROSS)ld
+DUMP = $(CROSS)objdump -d
+
+GCCVERSION = `$(CROSS)gcc -dumpversion`
 
 ABI = -isystem /usr/lib/gcc/arm-none-eabi/$(GCCVERSION)/include
 LIBS = -L /usr/lib/gcc/arm-none-eabi/$(GCCVERSION) -lgcc
@@ -20,13 +23,10 @@ CFLAGS          += -I.
 CFLAGS          += $(ABI)
 
 CC = $(CROSS)gcc $(CFLAGS)
-LD = $(CROSS)ld
 
-GCCVERSION = `$(CROSS)gcc -dumpversion`
+OBJS = start.o main.o mio.o gpio.o ccnt.o
 
-OBJS = start.o main.o
-
-TARGET = interrupts.bin
+TARGET = mio.bin
 
 %.bin: %.elf
 	$(CROSS)objcopy -O binary $< $@
@@ -42,10 +42,8 @@ all: install
 install: $(TARGET)
 	cp $(TARGET) /var/lib/tftpboot/bitcoin.bin
 
-DUMP = arm-linux-gnu-objdump -d
-
-dump:       interrupts.elf
-	$(DUMP) interrupts.elf >interrupts.dump
+dump:       mio.elf
+	$(DUMP) mio.elf >mio.dump
 
 clean:
 	rm -rf *.bin *.elf *.o *.dump
@@ -58,7 +56,7 @@ version:
 
 LDFLAGS = -nostdlib -z noexecstack --no-warn-rwx-segments
 
-interrupts.elf: $(OBJS)
+mio.elf: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) -T basic.lds $(LIBS)
 
 # THE END

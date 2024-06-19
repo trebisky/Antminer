@@ -13,15 +13,50 @@
 
 void main ( void );
 
-void
-init_mio ( void )
+#define MIO_RED		37
+#define MIO_GREEN	38
+
+static void
+mio_setup ( void )
 {
+	mio_init ();
+	mio_gpio ( MIO_RED );
+	mio_gpio ( MIO_GREEN );
+}
+
+#define MS_300  50000000;
+
+/* A reasonable delay for blinking an LED.
+ * This began as a wild guess, but
+ * in fact yields a 300ms delay
+ * as calibrated below.
+ */
+void
+delay_x ( void )
+{
+        volatile int count = MS_300;
+
+        while ( count-- )
+            ;
 }
 
 void
 main ( void )
 {
-	init_mio ();
+	mio_setup ();
+
+	gpio_init ();
+	gpio_config_output ( MIO_RED );
+	gpio_config_output ( MIO_GREEN );
+
+	for ( ;; ) {
+	    gpio_write ( MIO_RED, 0 );
+	    gpio_write ( MIO_GREEN, 0 );
+	    delay_x ();
+	    gpio_write ( MIO_RED, 1 );
+	    gpio_write ( MIO_GREEN, 1 );
+	    delay_x ();
+	}
 }
 
 /* THE END */
