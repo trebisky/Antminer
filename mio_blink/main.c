@@ -12,6 +12,7 @@
  */
 
 void main ( void );
+void slcr_unlock ( void );
 
 #define MIO_RED		37
 #define MIO_GREEN	38
@@ -40,9 +41,26 @@ delay_x ( void )
             ;
 }
 
+/* Half the above */
+#define MS_150  25000000;
+
+void
+delay_y ( void )
+{
+        volatile int count = MS_150;
+
+        while ( count-- )
+            ;
+}
+
 void
 main ( void )
 {
+
+	uart_init ();
+
+	// slcr_unlock ();
+
 	mio_setup ();
 
 	gpio_init ();
@@ -50,13 +68,49 @@ main ( void )
 	gpio_config_output ( MIO_GREEN );
 
 	for ( ;; ) {
+	    // printf ( "Blink off\n" );
 	    gpio_write ( MIO_RED, 0 );
-	    gpio_write ( MIO_GREEN, 0 );
-	    delay_x ();
-	    gpio_write ( MIO_RED, 1 );
 	    gpio_write ( MIO_GREEN, 1 );
-	    delay_x ();
+	    delay_y ();
+	    // printf ( "Blink on\n" );
+	    gpio_write ( MIO_RED, 1 );
+	    gpio_write ( MIO_GREEN, 0 );
+	    delay_y ();
 	}
+}
+
+typedef volatile unsigned int vu32;
+typedef unsigned int u32;
+
+/* Unlock the slcr registers
+ *  (this includes the MIO pin registers.
+ * See TRM pages 1576-1578
+ */
+// #define SlcrUnlock()    Xil_Out32(XPS_SYS_CTRL_BASEADDR + 0x08, 0xDF0DDF0D)
+// #define SlcrLock()              Xil_Out32(XPS_SYS_CTRL_BASEADDR + 0x04, 0x767B767B)
+
+struct slcr_regs {
+	vu32	ctrl;
+	vu32	lock;
+	vu32	unlock;
+};
+
+#define SLCR_BASE	(struct slcr_regs *) 0xf8000000
+
+void
+slcr_unlock ( void )
+{
+	struct slcr_regs *sp = SLCR_BASE;
+
+	sp->unlock = 0xDF0DDF0D;
+}
+
+void
+slcr_lock ( void )
+{
+	struct slcr_regs *sp = SLCR_BASE;
+
+	sp->lock = 0x76787678;
 }
 
 /* THE END */

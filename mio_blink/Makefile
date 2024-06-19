@@ -24,7 +24,7 @@ CFLAGS          += $(ABI)
 
 CC = $(CROSS)gcc $(CFLAGS)
 
-OBJS = start.o main.o mio.o gpio.o ccnt.o
+OBJS = start.o main.o mio.o gpio.o ccnt.o uart.o prf.o
 
 TARGET = mio.bin
 

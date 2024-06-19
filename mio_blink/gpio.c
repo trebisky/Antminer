@@ -72,7 +72,7 @@ struct zynq_gpio {
         vu32    ip0;		/* 0x220 */
         vu32    iany0;
 
-        int     _pad4[0];
+        int     _pad4[7];
 
         vu32    dir1;           /* 0x244 */
         vu32    oe1;
@@ -101,12 +101,16 @@ gpio_config_output ( int bit )
 {
         struct zynq_gpio *gp = GPIO_BASE;
 
+	printf ( "Config output for %d\n", bit );
+	printf ( "dir0 %08x\n", &gp->dir0 );
+	printf ( "dir1 %08x\n", &gp->dir1 );
+
 	if ( bit < 32 ) {
 	    gp->dir0 |= 1 << bit;
 	    gp->oe0 |= 1 << bit;
 	} else {
 	    gp->dir1 |= 1 << (bit-32);
-	    gp->oe1 |= 1 << bit;
+	    gp->oe1 |= 1 << (bit-32);
 	}
 }
 
@@ -127,17 +131,19 @@ gpio_write ( int bit, int val )
         struct zynq_gpio *gp = GPIO_BASE;
 	u32 m;
 
+	// printf ( "Write: bit %d = %d\n", bit, val );
+
 	if ( bit < 16 ) {
 	    m = 1 << (16+bit);
 	    m = (~m) & 0xffff0000;
-	    m |= val << (16+bit);
+	    m |= val << (bit);
 	    gp->output0_low = m;
 	    return;
 	}
 	if ( bit < 32 ) {
 	    m = 1 << (bit);
 	    m = (~m) & 0xffff0000;
-	    m |= val << bit;
+	    m |= val << (bit-16);
 	    gp->output0_high = m;
 	    return;
 	}
@@ -147,14 +153,14 @@ gpio_write ( int bit, int val )
 	if ( bit < 16 ) {
 	    m = 1 << (16+bit);
 	    m = (~m) & 0xffff0000;
-	    m |= val << (16+bit);
+	    m |= val << (bit);
 	    gp->output1_low = m;
 	    return;
 	}
 	if ( bit < 32 ) {
 	    m = 1 << (bit);
 	    m = (~m) & 0xffff0000;
-	    m |= val << bit;
+	    m |= val << (bit-16);
 	    gp->output1_high = m;
 	    return;
 	}

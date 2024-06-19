@@ -39,17 +39,21 @@ struct mio_pins {
 #define MIO_IO_33	0x600
 #define MIO_IO_HSTL	0x800
 
-/* The mux bits vary from pin to pin, but for both
- * of these, setting 0 selects GPIO 37 and 38
- * respectively (in bank 1)
+/* The bootrom write 0xe0 to set up the uart pins.
+ * The same for both Rx and Tx.
+ * So it leaves all the control values at 0
+ * and just sets the mux.
+ */
+
+/* The mux bits vary from pin to pin,
+ * but for all 54, it seems that
+ * setting 0 selects GPIO
  */
 #define MIO_MUX_GPIO	0
 
-#define MIO_RED		37
-#define MIO_GREEN	38
-
 /* Do not enable tri-state, let the gpio handle that */
-#define MIO_GPIO_VAL	( MIO_DISRCVR | MIO_IO_33 )
+// #define MIO_GPIO_VAL	( MIO_DISRCVR | MIO_IO_33 )
+#define MIO_GPIO_VAL	0x0
 
 void
 mio_init ( void )
@@ -62,6 +66,8 @@ mio_gpio ( int pin )
 {
 	struct mio_pins *mp = MIO_PIN_BASE;
 
+
+	printf ( "MIO for pin %d = %08x\n", pin, &mp->ctrl[pin] );
 	mp->ctrl[pin] = MIO_GPIO_VAL;
 }
 
