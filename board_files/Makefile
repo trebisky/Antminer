@@ -23,6 +23,10 @@ install:
 ##		#echo $(VPATH)
 ##		cp $(VPATH)/ebaz4205/1.0/* .
 
+# This is a 1000 pixel square image
+fetch_im:
+		cp /u1/Camera/lightroom/2024/2024_misc/s9.jpg .
+
 # This seemed useful once
 ls-zed:
 	ls -l $(VPATH)/zedboard/1.3
