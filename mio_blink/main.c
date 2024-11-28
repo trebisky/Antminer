@@ -59,6 +59,7 @@ main ( void )
 
 	uart_init ();
 
+	// apparently this is not needed
 	// slcr_unlock ();
 
 	mio_setup ();
@@ -79,15 +80,20 @@ main ( void )
 	}
 }
 
+#ifdef notdef
 typedef volatile unsigned int vu32;
 typedef unsigned int u32;
 
 /* Unlock the slcr registers
  *  (this includes the MIO pin registers.
  * See TRM pages 1576-1578
+ *
+ * Note that the TRM says that only the lower 16 bits of
+ * these registers do anything, but I mimic code I have seen
+ * written by Xilinx that sets both top and bottom the same.
  */
 // #define SlcrUnlock()    Xil_Out32(XPS_SYS_CTRL_BASEADDR + 0x08, 0xDF0DDF0D)
-// #define SlcrLock()              Xil_Out32(XPS_SYS_CTRL_BASEADDR + 0x04, 0x767B767B)
+// #define SlcrLock()      Xil_Out32(XPS_SYS_CTRL_BASEADDR + 0x04, 0x767B767B)
 
 struct slcr_regs {
 	vu32	ctrl;
@@ -112,5 +118,6 @@ slcr_lock ( void )
 
 	sp->lock = 0x76787678;
 }
+#endif
 
 /* THE END */
