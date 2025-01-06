@@ -32,15 +32,24 @@
 ## In order (on the board, left to right) they are D7, D8, D5, D6 -- don't blame me.
 # So uncomment either one of the following 4 mappings:
 
+# These are the LED in the order you see them on the board (left to right)
+# with the names as per the silkscreen and schematic
 #set_property -dict { PACKAGE_PIN F16 IOSTANDARD LVCMOS33 } [get_ports { d7_led }];
 #set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { d8_led }];
 #set_property -dict { PACKAGE_PIN M19 IOSTANDARD LVCMOS33 } [get_ports { d5_led }];
 #set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { d6_led }];
 
-set_property -dict { PACKAGE_PIN F16 IOSTANDARD LVCMOS33 } [get_ports { led_A }];
-set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { led_B }];
-set_property -dict { PACKAGE_PIN M19 IOSTANDARD LVCMOS33 } [get_ports { led_C }];
-set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { led_D }];
+# Here I retain the order but give them names that I like
+#set_property -dict { PACKAGE_PIN F16 IOSTANDARD LVCMOS33 } [get_ports { led_A }];
+#set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { led_B }];
+#set_property -dict { PACKAGE_PIN M19 IOSTANDARD LVCMOS33 } [get_ports { led_C }];
+#set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { led_D }];
+
+# Here are the names Vivado generates for EMIO
+set_property -dict { PACKAGE_PIN F16 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[0] }];
+set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[1] }];
+set_property -dict { PACKAGE_PIN M19 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[2] }];
+set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[3] }];
 
 # THE END
 

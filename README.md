@@ -8,6 +8,7 @@ The projects here are:
 1. printf - send endless messages, using a decent printf
 1. mio_blink - blink the red/green LED via MIO and GPIO
 1. board_files - board files for Vivado
+1. koala - learning non-project mode
 
 After 11-2024 my work on the Antminer S9 moved to my Kyu project as
 I focused my efforts on getting Kyu to run on Zynq, using the

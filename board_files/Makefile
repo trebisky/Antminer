@@ -8,7 +8,8 @@
 
 # path to Vivado board file collection
 #/tools/Xilinx/Vivado/2022.2/data/boards/board_files/ebaz4205/1.0
-VPATH=/tools/Xilinx/Vivado/2022.2/data/boards/board_files
+#VPATH=/tools/Xilinx/Vivado/2022.2/data/boards/board_files
+VPATH=/tools/Xilinx/Vivado/2024.2/data/boards/board_files
 
 install:
 		mkdir -p $(VPATH)/s9/1.0
