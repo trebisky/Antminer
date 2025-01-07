@@ -13,9 +13,9 @@ tcl scripts are required!
 
 These are based on the Electric Koala 4 part blog:
 
-[My notes: Vivado and Tcl] (http://cholla.mmto.org/zynq/fpga/vivado_tcl)
+[My notes: Vivado and Tcl](http://cholla.mmto.org/zynq/fpga/vivado_tcl)
 
-[Electric Koala: Zynq 7000] (https://www.electrickoala.dev/posts/zynq-7000-getting-started)
+[Electric Koala: Zynq 7000](https://www.electrickoala.dev/posts/zynq-7000-getting-started)
 
 Each project has a Makefile.  To generate a bitstream, do:
 
