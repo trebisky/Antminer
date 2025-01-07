@@ -10,6 +10,10 @@ tcl scripts are required!
 1. blink-led
 2. axi-gpio
 3. blink-led-rtl
+4. kyu
+
+The last "project" (kyu) is an example of C source used in my Kyu RTOS to
+communicate with the axi-gpio registers for example 2.
 
 These are based on the Electric Koala 4 part blog:
 
