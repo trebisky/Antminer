@@ -27,16 +27,14 @@ module blink #
 	// as if we ain't getting no clock
     // assign leds[3] = counter[COUNTER_WIDTH-1];
     // assign leds[3] = counter[20];
-    assign leds = {counter[25],3'b111};
+    // assign leds = {counter[25],3'b111};
+	assign leds = { 4{counter[25]} };
 
     always @(posedge clk)
-        counter <= counter + 1;
-        // if (!rstn)
-        //     counter <= 0;
-        // else
-        //   counter <= counter + 1;
+        if (!rstn)
+          counter <= 0;
+        else begin
+          counter <= counter + 1;
+		end
 
 endmodule
-
-`default_nettype wire
-

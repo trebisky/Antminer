@@ -7,10 +7,6 @@ This is more or less the same as the first project, except:
 
 1. It controls all four LED
 2. It uses custom Verilog in an RTL block
-3. There is a bug in my Verilog
-
-I never did sort out the bug -- that main point for me was to learn how
-to do this using Tcl, not working on my Verilog skills.
 
 To build the bitstream, do:
 
