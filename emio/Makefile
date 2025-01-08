@@ -15,6 +15,9 @@ build:
 	vivado -mode batch -source build.tcl
 	cp $(BPATH)/*.bit .
 
+constraints.xdc: gen_pins s9_pins
+	./gen_pins >constraints.xdc
+
 bit:
 	ls -l $(BPATH)/*.bit
 	cp $(BPATH)/*.bit .

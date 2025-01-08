@@ -1,0 +1,66 @@
+#!/bin/python
+
+# Tom Trebisky 12-15-2024
+
+# The following is from a working constraint file to
+# access the four onboard LED
+# set_property -dict { PACKAGE_PIN F16 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[0] }];
+# set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[1] }];
+# set_property -dict { PACKAGE_PIN M19 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[2] }];
+# set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { GPIO_0_tri_io[3] }];
+#
+# Here is a more compact way to do this:
+# set_property IOSTANDARD LVCMOS33 [get_ports {leds[*]}]
+# set_property SLEW SLOW [get_ports {leds[*]}]
+# set_property DRIVE 8 [get_ports {leds[*]}]
+# 
+# set_property PACKAGE_PIN F16 [get_ports {leds[0]}]
+# set_property PACKAGE_PIN L19 [get_ports {leds[1]}]
+# set_property PACKAGE_PIN M19 [get_ports {leds[2]}]
+# set_property PACKAGE_PIN M17 [get_ports {leds[3]}]
+#
+# in the s9_pins file I have this:
+# d5  b35_l7p   M19
+# d6  b35_l8p   M17
+# d7  b35_l6p   F16
+# d8  b35_l9p   L19
+
+infile = "s9_pins"
+
+#port_name = "leds"
+port_name = "GPIO_0_0_tri_io"
+
+# in python to get a literal {} in an f-string you double them up.
+def prefix () :
+    print ( f"set_property IOSTANDARD LVCMOS33 [get_ports {{{port_name}[*]}}]" )
+    print ( f"set_property SLEW SLOW [get_ports {{{port_name}[*]}}]" )
+    print ( f"set_property DRIVE 8 [get_ports {{{port_name}[*]}}]" )
+    print ( "" )
+
+def process ( index, arg ) :
+    ww = arg.split ()
+
+    oline = "set_property -dict { PACKAGE_PIN "
+    oline += ww[2]
+    oline += " IOSTANDARD LVCMOS33 } [get_ports { "
+    oline += f"{port_name}[{index}]"
+    oline += " }];"
+
+    print ( oline )
+
+# ---------------
+
+prefix ()
+
+index = 0
+with open( infile, 'r') as file:
+    for rline in file:
+        line = rline.strip()
+        if len(line) == 0 :
+            continue
+        if line[0] == '#' :
+            continue
+        process ( index, line )
+        index += 1
+
+# THE END

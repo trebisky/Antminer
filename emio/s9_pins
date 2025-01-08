@@ -1,0 +1,88 @@
+# All the pins here and there on an Antminer S9 board
+#
+# We get 41 unique signals including the 4 LED,
+# so 37 pins available for general use.
+
+# The J1 to J9 connectors
+# each connector has one MIO pin and 6 of the following
+# So we have 36 unique pins along with 9 in the MIO
+# These are all bank 34
+
+j1_5   l1p   T11
+j1_15  l1n   T10
+j1_12  l2n   U12
+j1_11  l2p   T12
+
+j2_5   0_plug2  R19
+j2_15  l3n   V13
+j2_12  l4n   W13
+j2_11  l4p   V12
+
+j3_5   l5p   T14
+j3_15  l5n   T15
+j3_12  l6n   R14
+j3_11  l6p   P14
+
+j4_5   l7p   Y16
+j4_15  l7n   Y17
+j4_12  l8n   Y14
+j4_11  l8p   W14
+
+j5_5   l9p   T16
+j5_15  l9n   U17
+j5_12  l10n  W15
+j5_11  l10p  V15
+
+j6_5   l11p  U14
+j6_15  l11n  U15
+j6_12  l12n  U19
+j6_11  l12p  U18
+
+j7_5   l15p  T20
+j7_15  l15n  U20
+j7_12  l16n  W20
+j7_11  l16p  V20
+
+j8_5   l17p  Y18
+j8_15  l17n  Y19
+j8_12  l18n  W16
+j8_11  l18p  V16
+
+j9_5   l19p  R16
+j9_15  l19n  R17
+j9_12  l20n  R18
+j9_11  l20p  T17
+
+# The FAN1 to FAN6 connectors
+fan1_speed b35_l15p   F19
+fan2_speed b35_l16n   F20
+fan3_speed b35_l15n   G17
+fan4_speed b35_l17p   G18
+fan5_speed b35_l16p   J20
+fan6_speed b35_l17n   H20
+
+# Shared for all 6 fan connectors
+fan_pwm  b35_l14p   J18
+
+# A pair of pins, like the shared pair below,
+# also pulled up via 1K to 3.3 volts
+# These go only to J9 and are not shared
+# labeled sda, scl, so some i2c bus apparently
+j9_4   l23p  N17
+j9_3   l23n  P18
+
+# Two pins on each are shared across all:
+# These two have 1K pullups to 3.3 volts
+# labeled sda, scl, so some i2c bus apparently
+jx_4   l22p  W18
+jx_3   l22n  W19
+
+# Finally the four on board LED
+# - we don't include them here since we don't
+# - want to drive these from EMIO
+#d5  b35_l7p   M19
+#d6  b35_l8p   M17
+#d7  b35_l6p   F16
+#d8  b35_l9p   L19
+
+# THE END
